@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Basalt — Everything you build, one keystroke away.</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        canvas: '#07080a',
+                        crimson: '#ff2f3a',
+                        coral: '#ff6b4a',
+                        amberGlow: '#ffb347',
+                        mutedGray: '#9c9c9d',
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        mono: ['Geist Mono', 'monospace'],
+                    },
+                }
+            }
+        }
+    </script>
+    <!-- Google Fonts: Inter & Geist Mono -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Geist+Mono:wght@400;500&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            background-color: #07080a;
+            color: #ffffff;
+            font-family: 'Inter', sans-serif;
+            overflow-x: hidden;
+            margin: 0;
+        }
+
+        /* Custom Aurora Animations */
+        @keyframes auroraDrift1 {
+            0%, 100% {
+                transform: translate(0px, 0px) rotate(12deg) scale(1.1);
+                opacity: 0.85;
+            }
+            50% {
+                transform: translate(45px, -35px) rotate(18deg) scale(1.25);
+                opacity: 0.95;
+            }
+        }
+
+        @keyframes auroraDrift2 {
+            0%, 100% {
+                transform: translate(0px, 0px) rotate(-15deg) scale(1.2);
+                opacity: 0.75;
+            }
+            50% {
+                transform: translate(-50px, 40px) rotate(-8deg) scale(1.35);
+                opacity: 0.9;
+            }
+        }
+
+        @keyframes auroraDrift3 {
+            0%, 100% {
+                transform: translate(0px, 0px) rotate(25deg) scale(1.0);
+                opacity: 0.65;
+            }
+            50% {
+                transform: translate(30px, 50px) rotate(32deg) scale(1.2);
+                opacity: 0.85;
+            }
+        }
+
+        .aurora-blade-1 {
+            animation: auroraDrift1 18s ease-in-out infinite;
+        }
+
+        .aurora-blade-2 {
+            animation: auroraDrift2 22s ease-in-out infinite;
+        }
+
+        .aurora-blade-3 {
+            animation: auroraDrift3 15s ease-in-out infinite;
+        }
+
+        /* Film Grain Overlay */
+        .film-grain {
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.035'/%3E%3C/svg%3E");
+        }
+
+        /* Radial Vignette */
+        .radial-vignette {
+            background: radial-gradient(circle at 50% 30%, rgba(7, 8, 10, 0) 0%, rgba(7, 8, 10, 0.75) 70%, rgba(7, 8, 10, 0.98) 100%);
+        }
+
+        /* Explicit Hero Headline Override */
+        .hero-headline {
+            font-size: 64px !important;
+            line-height: 1.1 !important;
+            font-weight: 600 !important;
+            letter-spacing: -0.03em !important;
+        }
+
+        @media (max-width: 768px) {
+            .hero-headline {
+                font-size: 40px !important;
+            }
+        }
+
+        /* Warm Gradient Text for 'keystroke' */
+        .warm-gradient-text {
+            background: linear-gradient(135deg, #ffb347 0%, #ff6b4a 50%, #ff2f3a 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #07080a;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #272a30;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #ff6b4a;
+        }
+    </style>
+</head>
+<body class="min-h-screen text-white relative selection:bg-crimson selection:text-white">
+
+    <!-- 2. Animated Warm Aurora Background (Highest Priority & Behind All Content) -->
+    <div class="fixed inset-0 pointer-events-none z-0 overflow-hidden">
+        <!-- Center/Main Crimson Core Glow -->
+        <div class="absolute top-[-10%] left-1/2 -translate-x-1/2 w-[1000px] h-[650px] bg-gradient-to-b from-[#ff2f3a]/30 via-[#ff6b4a]/20 to-transparent rounded-full blur-[140px] mix-blend-screen opacity-90"></div>
+
+        <!-- Oversized Diagonal Soft-Focus Light Blades -->
+        <div class="absolute -top-[20%] -left-[10%] w-[1200px] h-[700px] bg-gradient-to-tr from-[#ff2f3a] via-[#ff6b4a] to-[#ffb347] rounded-full blur-[120px] mix-blend-screen aurora-blade-1"></div>
+        <div class="absolute top-[10%] -right-[15%] w-[1100px] h-[800px] bg-gradient-to-bl from-[#ff6b4a] via-[#ffb347] to-[#ff2f3a] rounded-full blur-[130px] mix-blend-screen aurora-blade-2"></div>
+        <div class="absolute top-[35%] left-[10%] w-[900px] h-[600px] bg-gradient-to-r from-[#ff2f3a] via-[#ffb347] to-[#ff6b4a] rounded-full blur-[150px] mix-blend-screen aurora-blade-3"></div>
+
+        <!-- Film Grain & Radial Vignette Layer -->
+        <div class="absolute inset-0 film-grain pointer-events-none z-1"></div>
+        <div class="absolute inset-0 radial-vignette pointer-events-none z-2"></div>
+    </div>
+
+    <!-- 3. Floating Navigation Bar -->
+    <header class="fixed top-5 left-1/2 -translate-x-1/2 z-50 w-[92%] max-w-5xl">
+        <nav class="flex items-center justify-between px-5 py-3 rounded-full bg-[#0e1015]/75 backdrop-blur-xl border border-white/10 shadow-[0_8px_32px_rgba(0,0,0,0.4)] relative">
+            <!-- Inset top hairline highlight -->
+            <div class="absolute inset-x-4 top-0 h-[1px] bg-gradient-to-r from-transparent via-white/20 to-transparent rounded-full pointer-events-none"></div>
+
+            <!-- Left section: Logo Glyph & Wordmark -->
+            <a href="#" class="flex items-center gap-2.5 group">
+                <div class="w-6 h-6 rotate-45 bg-gradient-to-br from-crimson via-coral to-amberGlow rounded-[5px] flex items-center justify-center shadow-[0_0_12px_rgba(255,47,58,0.5)] group-hover:scale-105 transition-transform duration-300">
+                    <div class="w-2.5 h-2.5 bg-[#07080a] rounded-[2px] -rotate-45"></div>
+                </div>
+                <span class="font-sans font-semibold text-lg tracking-tight text-white">basalt</span>
+            </a>
+
+            <!-- Center section: Navigation Links -->
+            <div class="hidden md:flex items-center gap-7">
+                <a href="#product" class="text-sm font-medium text-mutedGray hover:text-white transition-colors duration-200">Product</a>
+                <a href="#docs" class="text-sm font-medium text-mutedGray hover:text-white transition-colors duration-200">Docs</a>
+                <a href="#pricing" class="text-sm font-medium text-mutedGray hover:text-white transition-colors duration-200">Pricing</a>
+                <a href="#changelog" class="text-sm font-medium text-mutedGray hover:text-white transition-colors duration-200">Changelog</a>
+                <a href="#blog" class="text-sm font-medium text-mutedGray hover:text-white transition-colors duration-200">Blog</a>
+            </div>
+
+            <!-- Right section: Log in & Download Pill -->
+            <div class="flex items-center gap-4">
+                <a href="#login" class="hidden sm:inline-block text-sm font-medium text-mutedGray hover:text-white transition-colors">Log in</a>
+                <a href="#download" class="flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/10 hover:bg-white/15 border border-white/15 text-xs font-medium text-white transition-all duration-200 shadow-sm group">
+                    <!-- Apple/OS Icon -->
+                    <svg class="w-3.5 h-3.5 text-white fill-current group-hover:scale-110 transition-transform" viewBox="0 0 170 170">
+                        <path d="M150.37 130.25c-2.45 5.66-5.35 10.87-8.71 15.66-4.58 6.53-8.33 11.05-11.22 13.56-4.48 4.12-9.28 6.23-14.42 6.35-3.69 0-8.14-1.05-13.32-3.18-5.19-2.12-9.97-3.17-14.34-3.17-4.58 0-9.49 1.05-14.75 3.17-5.26 2.13-9.5 3.24-12.74 3.35-4.35.13-9.1-1.9-14.24-6.08-3.05-2.55-6.85-7.14-11.4-13.78-7.73-11.12-13.67-23.23-17.82-36.33-4.15-13.1-6.23-25.26-6.23-36.48 0-14.07 3.55-25.33 10.65-33.78 7.1-8.45 15.93-12.74 26.5-12.86 5.86 0 11.48 1.5 16.86 4.5 5.38 3 9.4 4.5 12.06 4.5 2.39 0 6.64-1.56 12.75-4.68 6.11-3.12 11.83-4.6 17.15-4.45 13.75.54 24.36 5.37 31.83 14.48-11.96 7.28-17.84 17.5-17.65 30.67.19 10.88 4.29 19.9 12.3 27.05 4.63 4.15 10.15 7.02 16.55 8.6-3.1 9.5-7.15 18.9-12.15 28.2zM119.22 31.25c0-7.39 2.68-14.28 8.04-20.67 5.36-6.39 12.1-9.98 20.22-10.78.13 1.08.2 2.05.2 2.91 0 7.26-2.8 14.22-8.4 20.88-5.6 6.67-12.44 10.35-20.52 11.04-.13-.87-.2-1.74-.2-2.61z"/>
+                    </svg>
+                    <span>Download</span>
+                </a>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Main Hero Content Container -->
+    <main class="relative z-10 pt-36 pb-28 px-4 flex flex-col items-center text-center max-w-6xl mx-auto">
+
+        <!-- 4. Hero Content -->
+        
+        <!-- Eyebrow Chip -->
+        <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#12151c]/80 border border-white/10 backdrop-blur-md shadow-sm mb-6 transition-transform hover:scale-[1.02] cursor-pointer">
+            <span class="font-mono text-xs font-semibold px-2 py-0.5 rounded-full bg-gradient-to-r from-crimson to-coral text-white">v2.0</span>
+            <span class="text-xs font-medium text-mutedGray tracking-tight">now with an AI command bar</span>
+            <svg class="w-3.5 h-3.5 text-mutedGray" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
+        </div>
+
+        <!-- Main Headline -->
+        <h1 class="hero-headline text-white max-w-4xl tracking-tight mb-6">
+            Everything you build, <br>one <span class="warm-gradient-text">keystroke</span> away.
+        </h1>
+
+        <!-- Subtitle -->
+        <p class="text-lg md:text-xl text-mutedGray max-w-2xl font-normal leading-relaxed mb-10">
+            A faster way to navigate your workflow, execute commands, and stay focused on what matters. Everything you need, just one keystroke away.
+        </p>
+
+        <!-- CTA Action Buttons -->
+        <div class="flex flex-col sm:flex-row items-center justify-center gap-4 w-full max-w-md mb-16">
+            <button class="w-full sm:w-auto px-6 py-3 rounded-xl bg-gradient-to-r from-crimson via-coral to-amberGlow text-white font-semibold text-sm shadow-[0_0_25px_rgba(255,47,58,0.4)] hover:shadow-[0_0_35px_rgba(255,107,74,0.6)] hover:scale-[1.02] active:scale-[0.98] transition-all duration-200">
+                Get Basalt Free
+            </button>
+            <button class="w-full sm:w-auto px-6 py-3 rounded-xl bg-[#12151c]/90 hover:bg-[#1a1e26] border border-white/10 text-white font-medium text-sm transition-all duration-200 flex items-center justify-center gap-2 group">
+                <span>View Documentation</span>
+                <span class="font-mono text-xs text-mutedGray bg-white/5 px-1.5 py-0.5 rounded border border-white/10 group-hover:text-white transition-colors">⌘D</span>
+            </button>
+        </div>
+
+        <!-- Interactive Command Bar / Preview Window -->
+        <div class="w-full max-w-3xl mx-auto rounded-2xl bg-[#0e1015]/90 border border-white/10 shadow-[0_20px_50px_rgba(0,0,0,0.8)] backdrop-blur-2xl overflow-hidden text-left relative group">
+            
+            <!-- Window Top Bar -->
+            <div class="flex items-center justify-between px-4 py-3 bg-[#13161f]/80 border-b border-white/10">
+                <div class="flex items-center gap-2">
+                    <div class="w-3 h-3 rounded-full bg-[#ff2f3a]/80"></div>
+                    <div class="w-3 h-3 rounded-full bg-[#ffb347]/80"></div>
+                    <div class="w-3 h-3 rounded-full bg-emerald-500/80"></div>
+                    <span class="ml-3 font-mono text-xs text-mutedGray">basalt-workspace — universal command bar</span>
+                </div>
+                <div class="flex items-center gap-2">
+                    <span class="font-mono text-[11px] px-2 py-0.5 rounded bg-white/5 border border-white/10 text-mutedGray">v2.0.4</span>
+                </div>
+            </div>
+
+            <!-- Command Search Input Area -->
+            <div class="p-4 border-b border-white/10 bg-[#0b0d12]/50 flex items-center gap-3">
+                <svg class="w-5 h-5 text-coral shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
+                <input type="text" id="commandInput" placeholder="Type a command or search workspace (e.g. deploy, AI, pr)..." class="w-full bg-transparent text-white placeholder-mutedGray text-sm focus:outline-none font-sans" autocomplete="off" autofocus>
+                <span class="font-mono text-xs px-2 py-1 rounded bg-white/10 text-mutedGray border border-white/15 shrink-0">⌘K</span>
+            </div>
+
+            <!-- Interactive Command Results List -->
+            <div class="p-2 max-h-[340px] overflow-y-auto space-y-1" id="commandList">
+                
+                <div class="command-item flex items-center justify-between p-3 rounded-xl bg-white/[0.04] border border-white/10 hover:bg-white/[0.08] cursor-pointer transition-colors group/item" onclick="simulateAction('Deploy to Production')">
+                    <div class="flex items-center gap-3">
+                        <div class="w-8 h-8 rounded-lg bg-crimson/20 border border-crimson/30 flex items-center justify-center text-crimson group-hover/item:scale-105 transition-transform">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
+                        </div>
+                        <div>
+                            <div class="text-sm font-medium text-white flex items-center gap-2">
+                                <span>Deploy to production cluster</span>
+                                <span class="text-[10px] font-mono px-1.5 py-0.5 rounded bg-crimson/20 text-crimson border border-crimson/30">Fast</span>
+                            </div>
+                            <div class="text-xs text-mutedGray">Triggers automated CI/CD pipeline on main branch</div>
+                        </div>
+                    </div>
+                    <span class="font-mono text-xs text-mutedGray bg-white/5 px-2 py-1 rounded border border-white/10">⌘P</span>
+                </div>
+
+                <div class="command-item flex items-center justify-between p-3 rounded-xl hover:bg-white/[0.06] cursor-pointer transition-colors group/item" onclick="simulateAction('Ask AI Copilot')">
+                    <div class="flex items-center gap-3">
+                        <div class="w-8 h-8 rounded-lg bg-coral/20 border border-coral/30 flex items-center justify-center text-coral group-hover/item:scale-105 transition-transform">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path></svg>
+                        </div>
+                        <div>
+                            <div class="text-sm font-medium text-white flex items-center gap-2">
+                                <span>Ask Basalt AI Assistant</span>
+                                <span class="text-[10px] font-mono px-1.5 py-0.5 rounded bg-amberGlow/20 text-amberGlow border border-amberGlow/30">New</span>
+                            </div>
+                            <div class="text-xs text-mutedGray">Summarize recent commits, PRs, and team logs</div>
+                        </div>
+                    </div>
+                    <span class="font-mono text-xs text-mutedGray bg-white/5 px-2 py-1 rounded border border-white/10">⌥I</span>
+                </div>
+
+                <div class="command-item flex items-center justify-between p-3 rounded-xl hover:bg-white/[0.06] cursor-pointer transition-colors group/item" onclick="simulateAction('Review Pull Requests')">
+                    <div class="flex items-center gap-3">
+                        <div class="w-8 h-8 rounded-lg bg-amberGlow/20 border border-amberGlow/30 flex items-center justify-center text-amberGlow group-hover/item:scale-105 transition-transform">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 9l3 3-3 3m5 0h3M5 20h14a2 2 0 002-2V6a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
+                        </div>
+                        <div>
+                            <div class="text-sm font-medium text-white">Review active pull requests (12)</div>
+                            <div class="text-xs text-mutedGray">Inspect pending code reviews across repositories</div>
+                        </div>
+                    </div>
+                    <span class="font-mono text-xs text-mutedGray bg-white/5 px-2 py-1 rounded border border-white/10">⌘R</span>
+                </div>
+
+                <div class="command-item flex items-center justify-between p-3 rounded-xl hover:bg-white/[0.06] cursor-pointer transition-colors group/item" onclick="simulateAction('Generate API Token')">
+                    <div class="flex items-center gap-3">
+                        <div class="w-8 h-8 rounded-lg bg-white/10 border border-white/15 flex items-center justify-center text-white group-hover/item:scale-105 transition-transform">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 7a2 2 0 012 2m4 0a6 6 0 01-7.743 5.743L11 17H9v2H7v2H4a1 1 0 01-1-1v-2.586a1 1 0 01.293-.707l5.964-5.964A6 6 0 1121 9z"></path></svg>
+                        </div>
+                        <div>
+                            <div class="text-sm font-medium text-white">Generate scoped API token</div>
+                            <div class="text-xs text-mutedGray">Create secure credentials with custom expiry</div>
+                        </div>
+                    </div>
+                    <span class="font-mono text-xs text-mutedGray bg-white/5 px-2 py-1 rounded border border-white/10">⌘T</span>
+                </div>
+
+            </div>
+
+            <!-- Toast feedback notification inside preview window -->
+            <div id="toastNotification" class="absolute bottom-4 right-4 bg-[#181c25] border border-amberGlow/40 px-4 py-2.5 rounded-xl shadow-2xl flex items-center gap-3 transform translate-y-16 opacity-0 transition-all duration-300 z-30">
+                <div class="w-2 h-2 rounded-full bg-amberGlow animate-ping"></div>
+                <span id="toastText" class="text-xs font-mono text-white">Action executed successfully!</span>
+            </div>
+
+            <!-- Footer of Window -->
+            <div class="px-4 py-2.5 bg-[#12151c]/90 border-t border-white/10 flex items-center justify-between text-xs text-mutedGray font-mono">
+                <div class="flex items-center gap-4">
+                    <span>↑↓ Navigate</span>
+                    <span>↵ Select</span>
+                </div>
+                <div class="flex items-center gap-2">
+                    <span class="w-2 h-2 rounded-full bg-crimson inline-block"></span>
+                    <span>Basalt Engine Active</span>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- Social Proof / Stats Ticker -->
+        <div class="mt-20 grid grid-cols-2 md:grid-cols-4 gap-8 max-w-4xl mx-auto w-full pt-10 border-t border-white/10">
+            <div>
+                <div class="text-3xl font-bold font-sans text-white mb-1">&lt; 12ms</div>
+                <div class="text-xs text-mutedGray font-mono">Command Latency</div>
+            </div>
+            <div>
+                <div class="text-3xl font-bold font-sans text-white mb-1">99.99%</div>
+                <div class="text-xs text-mutedGray font-mono">Uptime Reliability</div>
+            </div>
+            <div>
+                <div class="text-3xl font-bold font-sans text-white mb-1">100k+</div>
+                <div class="text-xs text-mutedGray font-mono">Active Developers</div>
+            </div>
+            <div>
+                <div class="text-3xl font-bold font-sans text-white mb-1">50ms</div>
+                <div class="text-xs text-mutedGray font-mono">Setup Time</div>
+            </div>
+        </div>
+
+    </main>
+
+    <!-- Interactive JavaScript -->
+    <script>
+        function simulateAction(actionName) {
+            const toast = document.getElementById('toastNotification');
+            const toastText = document.getElementById('toastText');
+            toastText.textContent = `⚡ Executing: ${actionName}...`;
+            
+            toast.classList.remove('translate-y-16', 'opacity-0');
+            toast.classList.add('translate-y-0', 'opacity-100');
+
+            setTimeout(() => {
+                toast.classList.remove('translate-y-0', 'opacity-100');
+                toast.classList.add('translate-y-16', 'opacity-0');
+            }, 3000);
+        }
+
+        // Search filtering simulation
+        const searchInput = document.getElementById('commandInput');
+        searchInput.addEventListener('input', (e) => {
+            const query = e.target.value.toLowerCase();
+            const items = document.querySelectorAll('.command-item');
+            
+            items.forEach(item => {
+                const text = item.textContent.toLowerCase();
+                if (text.includes(query)) {
+                    item.style.display = 'flex';
+                } else {
+                    item.style.display = 'none';
+                }
+            });
+        });
+    </script>
+</body>
+</html>
